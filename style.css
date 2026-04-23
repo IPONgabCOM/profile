@@ -29,7 +29,7 @@ body {
 }
 
 /* =========================
-   CLICK OVERLAY
+   OVERLAY
 ========================= */
 #overlay {
   position: fixed;
@@ -44,13 +44,11 @@ body {
 
 .click-text {
   letter-spacing: 10px;
-  font-size: 14px;
-  opacity: 0.7;
   animation: breathe 2s infinite;
 }
 
 /* =========================
-   MAIN LAYOUT
+   MAIN
 ========================= */
 .main-content {
   height: 100vh;
@@ -69,7 +67,7 @@ body {
 }
 
 /* =========================
-   AVATAR SECTION
+   AVATAR SYSTEM (FIXED DECO)
 ========================= */
 .avatar-container {
   position: relative;
@@ -78,7 +76,19 @@ body {
   margin: 0 auto 20px;
 }
 
-/* main avatar */
+/* DECORATION (NOW PROPERLY BEHIND AVATAR) */
+.avatar-decoration {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* MAIN AVATAR (ABOVE DECORATION) */
 .avatar {
   width: 95px;
   height: 95px;
@@ -88,20 +98,7 @@ body {
   z-index: 2;
 }
 
-/* decoration ring */
-.avatar-decoration {
-  position: absolute;
-  width: 140px;
-  height: 140px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-}
-
-/* =========================
-   STATUS DOT
-========================= */
+/* STATUS DOT */
 .status-dot {
   width: 18px;
   height: 18px;
@@ -119,7 +116,7 @@ body {
 .offline { background: #747f8d; }
 
 /* =========================
-   DISCORD HOVER CARD
+   DISCORD CARD
 ========================= */
 .discord-card {
   position: absolute;
@@ -141,7 +138,6 @@ body {
   transform: translateX(-50%) translateY(0);
 }
 
-/* hover avatar inside card */
 #card-avatar {
   width: 40px;
   height: 40px;
@@ -150,7 +146,7 @@ body {
 }
 
 /* =========================
-   NAME
+   NAME + NOTE
 ========================= */
 #display-name {
   font-size: 22px;
@@ -158,15 +154,11 @@ body {
   position: relative;
 }
 
-/* typing cursor */
 #display-name::after {
   content: "|";
   animation: blink 1s infinite;
 }
 
-/* =========================
-   NOTE UNDER NAME
-========================= */
 #note-section {
   margin-top: 8px;
   font-size: 13px;
