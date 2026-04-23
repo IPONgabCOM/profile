@@ -18,29 +18,27 @@ overlay:el("overlay"),
 favicon:el("dynamic-favicon")
 };
 
-// typing effect (fixed, no spam)
-let typingTimeout;
-function typeText(element, text){
-clearTimeout(typingTimeout);
-element.innerText="";
+/* TYPE EFFECT */
+let typing;
+function typeText(el,text){
+clearTimeout(typing);
+el.innerText="";
 let i=0;
-
-function type(){
+function t(){
 if(i<text.length){
-element.innerText+=text[i++];
-typingTimeout=setTimeout(type,40);
-}
-}
-type();
+el.innerText+=text[i++];
+typing=setTimeout(t,40);
+}}
+t();
 }
 
-// enter
+/* ENTER */
 function enterSite(){
 DOM.overlay.classList.add("hidden");
 
+/* music */
 DOM.music.volume=0;
 DOM.music.play().catch(()=>{});
-
 let v=0;
 let fade=setInterval(()=>{
 v+=0.02;
@@ -48,17 +46,28 @@ DOM.music.volume=v;
 if(v>=0.2) clearInterval(fade);
 },100);
 
+/* load systems */
 connectLanyard();
-handleViews();
+updateViews();
 }
 
-// update UI
-function updateUI(d){
-if(!d || !d.discord_user) return;
+/* VIEW COUNTER (REAL FIX) */
+async function updateViews(){
+try{
+const res = await fetch(`https://api.counterapi.dev/v1/dre_profile_${DISCORD_ID}/up`);
+const data = await res.json();
+DOM.views.innerText = data.value.toLocaleString();
+}catch{
+DOM.views.innerText="0";
+}
+}
 
+/* UPDATE UI */
+function updateUI(d){
+if(!d||!d.discord_user) return;
 const u=d.discord_user;
 
-// avatar
+/* avatar */
 if(u.avatar){
 const url=`https://cdn.discordapp.com/avatars/${DISCORD_ID}/${u.avatar}.${u.avatar.startsWith("a_")?"gif":"png"}`;
 DOM.avatar.src=url;
@@ -66,46 +75,35 @@ DOM.cardAvatar.src=url;
 DOM.favicon.href=url;
 }
 
-// name
+/* name */
 const name=u.global_name||u.username||"dwep";
 typeText(DOM.name,name);
 typeText(DOM.cardName,name);
+DOM.username.innerText="@"+u.username;
 
-DOM.username.innerText="@"+(u.username||"dwep");
+/* status */
+DOM.status.className="status-dot "+d.discord_status;
 
-// status
-DOM.status.className="status-dot "+(d.discord_status||"offline");
-
-// decoration FIX (real working)
-if(u.avatar_decoration_data && u.avatar_decoration_data.asset){
+/* decoration */
+if(u.avatar_decoration_data){
 const asset=u.avatar_decoration_data.asset;
+const url1=`https://cdn.discordapp.com/avatar-decoration-presets/${asset}.png?${Date.now()}`;
+const url2=`https://cdn.discordapp.com/avatar-decorations/${asset}.png?${Date.now()}`;
 
-const url1=`https://cdn.discordapp.com/avatar-decoration-presets/${asset}.png?size=160&v=${Date.now()}`;
-const url2=`https://cdn.discordapp.com/avatar-decorations/${asset}.png?size=160&v=${Date.now()}`;
-
-DOM.decoration.onload=()=>{
-DOM.decoration.style.display="block";
-};
-DOM.decoration.onerror=()=>{
-DOM.decoration.src=url2;
-};
-
+DOM.decoration.onerror=()=>DOM.decoration.src=url2;
 DOM.decoration.src=url1;
-}else{
-DOM.decoration.style.display="none";
-}
+DOM.decoration.style.display="block";
+}else DOM.decoration.style.display="none";
 
-// custom status
+/* note */
 const custom=d.activities?.find(a=>a.type===4);
-if(custom && custom.state){
+if(custom){
 DOM.note.innerText=custom.state;
 DOM.noteSection.style.display="block";
-}else{
-DOM.noteSection.style.display="none";
-}
+}else DOM.noteSection.style.display="none";
 }
 
-// websocket
+/* LANYARD */
 function connectLanyard(){
 const ws=new WebSocket("wss://api.lanyard.rest/socket");
 
@@ -124,15 +122,4 @@ updateUI(msg.d);
 };
 
 ws.onclose=()=>setTimeout(connectLanyard,5000);
-}
-
-// views
-async function handleViews(){
-try{
-const res=await fetch(`https://api.counterapi.dev/v1/dre_${DISCORD_ID}/visits`);
-const data=await res.json();
-DOM.views.innerText=data.value;
-}catch{
-DOM.views.innerText="—";
-}
 }
