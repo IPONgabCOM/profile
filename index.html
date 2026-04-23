@@ -6,45 +6,67 @@
 
 <title>/Dre</title>
 
+<!-- Favicon -->
 <link rel="icon" id="dynamic-favicon" href="">
+
+<!-- CSS -->
 <link rel="stylesheet" href="style.css">
+
+<!-- Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
 
-<!-- CLICK OVERLAY -->
+<!-- =========================
+   CLICK TO ENTER
+========================= -->
 <div id="overlay">
   <div class="click-text">c l i c k</div>
 </div>
 
-<!-- BACKGROUND -->
+<!-- =========================
+   BACKGROUND
+========================= -->
 <div class="background-container">
-  <img src="https://media.giphy.com/media/k18AJ9319EKBD2o6gx/giphy.gif">
+  <img src="https://media.giphy.com/media/k18AJ9319EKBD2o6gx/giphy.gif" alt="background">
 </div>
 
-<!-- MUSIC -->
+<!-- =========================
+   MUSIC
+========================= -->
 <audio id="bg-music" loop preload="auto">
   <source src="Gat Putch - Halik Sobrang Diin PT.2 (feat. Louie Grammz & Mi'Kel).mp3">
 </audio>
 
-<!-- MAIN -->
+<!-- =========================
+   MAIN PROFILE
+========================= -->
 <div class="main-content">
   <div class="profile-card">
 
-    <!-- AVATAR -->
+    <!-- AVATAR SECTION -->
     <div class="avatar-container">
 
-      <img id="discord-decoration" class="avatar-decoration" style="display:none;">
-      <img id="discord-avatar" class="avatar">
+      <!-- DECORATION -->
+      <img id="discord-decoration" class="avatar-decoration" style="display:none;" alt="decoration">
 
+      <!-- AVATAR -->
+      <img id="discord-avatar" class="avatar" alt="avatar">
+
+      <!-- STATUS -->
       <div id="status-dot" class="status-dot offline"></div>
 
+      <!-- HOVER CARD -->
       <div class="discord-card">
-        <img id="card-avatar">
+
+        <img id="card-avatar" alt="card-avatar">
+
         <h2 id="card-name">dwep</h2>
         <p id="card-username">@dwep</p>
+
         <p id="card-status-text" class="status-text">Offline</p>
+
       </div>
 
     </div>
@@ -81,7 +103,9 @@
 
     </div>
 
-    <!-- NOW PLAYING FRAME (BELOW SOCIALS) -->
+    <!-- =========================
+         NOW PLAYING (FRAME BELOW SOCIALS)
+    ========================= -->
     <div class="now-playing-frame">
       <div class="now-playing-title">Now Playing</div>
       <div class="now-playing-text">🎵 Halik Sobrang Diin PT.2</div>
@@ -95,8 +119,11 @@
   </div>
 </div>
 
+<!-- FOOTER -->
 <div class="made-by">Made By: Dre</div>
 
+<!-- SCRIPT -->
 <script src="script.js"></script>
+
 </body>
 </html>
