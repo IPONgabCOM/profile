@@ -6,91 +6,61 @@
 
 <title>/Dre</title>
 
-<!-- Favicon (dynamic Discord avatar) -->
 <link rel="icon" id="dynamic-favicon" href="">
-
-<!-- CSS -->
 <link rel="stylesheet" href="style.css">
-
-<!-- Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
 
-<!-- =========================
-   CLICK TO ENTER
-========================= -->
+<!-- CLICK OVERLAY -->
 <div id="overlay">
   <div class="click-text">c l i c k</div>
 </div>
 
-<!-- =========================
-   BACKGROUND
-========================= -->
+<!-- BACKGROUND -->
 <div class="background-container">
-  <img src="https://media.giphy.com/media/k18AJ9319EKBD2o6gx/giphy.gif" alt="background">
+  <img src="https://media.giphy.com/media/k18AJ9319EKBD2o6gx/giphy.gif" alt="bg">
 </div>
 
-<!-- =========================
-   MUSIC
-========================= -->
+<!-- MUSIC -->
 <audio id="bg-music" loop preload="auto">
   <source src="Gat Putch - Halik Sobrang Diin PT.2 (feat. Louie Grammz & Mi'Kel).mp3">
 </audio>
 
-<!-- =========================
-   MAIN PROFILE CARD
-========================= -->
+<!-- MAIN -->
 <div class="main-content">
   <div class="profile-card">
 
-    <!-- AVATAR SECTION -->
+    <!-- AVATAR -->
     <div class="avatar-container">
 
-      <!-- DISCORD AVATAR DECORATION -->
-      <img id="discord-decoration" class="avatar-decoration" style="display:none;" alt="decoration">
+      <img id="discord-decoration" class="avatar-decoration" style="display:none;">
+      <img id="discord-avatar" class="avatar">
 
-      <!-- MAIN AVATAR -->
-      <img id="discord-avatar" class="avatar" alt="avatar">
-
-      <!-- STATUS DOT -->
       <div id="status-dot" class="status-dot offline"></div>
 
-      <!-- HOVER CARD -->
       <div class="discord-card">
-
-        <img id="card-avatar" alt="card avatar">
-
+        <img id="card-avatar">
         <h2 id="card-name">dwep</h2>
         <p id="card-username">@dwep</p>
-
         <p id="card-status-text" class="status-text">Offline</p>
-
       </div>
 
     </div>
 
-    <!-- =========================
-         DISPLAY NAME
-    ========================= -->
+    <!-- NAME -->
     <h1 id="display-name">dwep</h1>
 
-    <!-- NOTE UNDER NAME -->
+    <!-- USERNAME -->
+    <p id="card-username">@dwep</p>
+
+    <!-- NOTE (MOVED HERE ✔ BETWEEN USERNAME & SOCIALS) -->
     <div id="note-section" style="display:none;">
       <p id="discord-note"></p>
     </div>
 
-    <!-- =========================
-         NOW PLAYING
-    ========================= -->
-    <div class="now-playing">
-      🎵 Now Playing: Halik Sobrang Diin PT.2
-    </div>
-
-    <!-- =========================
-         SOCIALS (YOUR UPDATED LINKS)
-    ========================= -->
+    <!-- SOCIALS -->
     <div class="socials">
 
       <a href="https://www.instagram.com/d739140803/" target="_blank">
@@ -112,8 +82,14 @@
     </div>
 
     <!-- =========================
-         VIEWS
+         NOW PLAYING (NEW FRAME ✔ BELOW SOCIALS)
     ========================= -->
+    <div class="now-playing-frame">
+      <div class="now-playing-title">Now Playing</div>
+      <div class="now-playing-text">🎵 Halik Sobrang Diin PT.2</div>
+    </div>
+
+    <!-- VIEWS -->
     <div class="view-pill">
       Views: <span id="view-count">0</span>
     </div>
@@ -121,13 +97,9 @@
   </div>
 </div>
 
-<!-- =========================
-   FOOTER
-========================= -->
+<!-- FOOTER -->
 <div class="made-by">Made By: Dre</div>
 
-<!-- SCRIPT -->
 <script src="script.js"></script>
-
 </body>
 </html>
