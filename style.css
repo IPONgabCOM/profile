@@ -3,14 +3,40 @@
 body{background:#000;color:#fff;font-family:monospace;overflow:hidden;}
 
 .background-container{position:fixed;inset:0;}
-.background-container img{width:100%;height:100%;object-fit:cover;filter:brightness(35%) grayscale(100%);}
+.background-container img{
+width:100%;
+height:100%;
+object-fit:cover;
+filter:brightness(35%) grayscale(100%);
+}
 
-#particles{position:fixed;inset:0;z-index:2;}
-
-#overlay{position:fixed;inset:0;background:#000;display:flex;justify-content:center;align-items:center;z-index:999;transition:1s;}
+/* overlay */
+#overlay{
+position:fixed;
+inset:0;
+background:#000;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:999;
+transition:1s;
+}
 #overlay.hidden{opacity:0;pointer-events:none;}
 
-.main-content{position:relative;z-index:10;display:flex;justify-content:center;align-items:center;height:100vh;}
+.click-text{
+letter-spacing:10px;
+animation:breathe 2s infinite;
+}
+
+/* layout */
+.main-content{
+position:relative;
+z-index:10;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
 
 .profile-card{
 background:rgba(255,255,255,0.05);
@@ -20,7 +46,7 @@ border-radius:20px;
 text-align:center;
 }
 
-/* AVATAR FIXED */
+/* avatar FIX */
 .avatar-container{
 position:relative;
 width:130px;
@@ -47,6 +73,7 @@ top:50%;
 left:50%;
 transform:translate(-50%,-50%);
 z-index:3;
+pointer-events:none;
 }
 
 .status-dot{
@@ -65,26 +92,23 @@ z-index:4;
 .idle{background:orange;}
 .offline{background:gray;}
 
-/* SPOTIFY */
-.spotify-bar{
-display:flex;
-align-items:center;
-background:rgba(255,255,255,0.05);
-padding:10px;
-border-radius:10px;
-margin:15px 0;
+/* socials */
+.socials a{
+color:white;
+margin:10px;
+font-size:20px;
+opacity:.5;
+transition:.3s;
+}
+.socials a:hover{
+opacity:1;
+transform:translateY(-3px);
 }
 
-#spotify-cover{width:50px;height:50px;border-radius:8px;margin-right:10px;}
-
-.spotify-info{flex:1;text-align:left;font-size:11px;}
-
-.progress{height:4px;background:#222;margin-top:5px;border-radius:5px;}
-#spotify-progress{height:100%;background:#1db954;width:0%;}
-
-/* TEXT ANIMATION */
+/* typing cursor */
 #display-name::after{
 content:"|";
+margin-left:5px;
 animation:blink 1s infinite;
 }
 
@@ -93,7 +117,12 @@ animation:blink 1s infinite;
 50%{opacity:0;}
 }
 
-/* FOOTER */
+@keyframes breathe{
+0%,100%{opacity:1;}
+50%{opacity:.3;}
+}
+
+/* footer */
 .made-by{
 position:fixed;
 bottom:10px;
@@ -101,7 +130,3 @@ right:15px;
 font-size:10px;
 color:rgba(255,255,255,0.4);
 }
-
-/* SOCIAL */
-.socials a{color:white;margin:10px;font-size:20px;opacity:.5;}
-.socials a:hover{opacity:1;}
