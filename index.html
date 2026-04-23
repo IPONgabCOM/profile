@@ -12,15 +12,15 @@
 
 <body>
 
-<div id="overlay" onclick="enterSite()">
-    <div class="click-text">c l i c k</div>
+<div id="overlay">
+    <div class="click-text">click</div>
 </div>
 
 <div class="background-container">
     <img src="https://media.giphy.com/media/k18AJ9319EKBD2o6gx/giphy.gif">
 </div>
 
-<audio id="bg-music" loop>
+<audio id="bg-music" loop preload="auto">
     <source src="Halik Sobrang Diin PT.2.mp3" type="audio/mpeg">
 </audio>
 
@@ -29,7 +29,6 @@
 
     <div class="avatar-container">
 
-        <!-- DISCORD TOPBAR -->
         <div class="discord-card">
             <img id="card-avatar">
             <h2 id="card-name">dwep</h2>
@@ -39,7 +38,7 @@
             </div>
         </div>
 
-        <img id="discord-decoration" class="avatar-decoration" style="display:none;">
+        <img id="discord-decoration" class="avatar-decoration">
         <img id="discord-avatar" class="avatar">
         <div id="status-dot" class="status-dot offline"></div>
 
@@ -55,7 +54,7 @@
     </div>
 
     <div class="view-pill">
-        Views: <span id="view-count">0</span>
+        Views: <span id="view-count">Loading...</span>
     </div>
 
 </div>
