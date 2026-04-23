@@ -18,7 +18,7 @@ overlay: $("overlay"),
 favicon: $("dynamic-favicon")
 };
 
-/* ENTER FIX (required for GitHub audio) */
+/* ---------- ENTER ---------- */
 DOM.overlay.addEventListener("click", () => {
 DOM.overlay.style.display = "none";
 startMusic();
@@ -26,33 +26,37 @@ connectLanyard();
 updateViews();
 });
 
-/* MUSIC FIX */
+/* ---------- MUSIC ---------- */
 function startMusic(){
 DOM.music.volume = 0;
 DOM.music.play().catch(()=>{});
 let v = 0;
 let fade = setInterval(()=>{
-v += 0.02;
+v += 0.03;
 DOM.music.volume = v;
 if(v >= 0.2) clearInterval(fade);
-},100);
+},80);
 }
 
-/* TYPE */
-let typing;
-function typeText(el, text){
-clearTimeout(typing);
-el.innerText="";
-let i=0;
-(function t(){
-if(i<text.length){
+/* ---------- TYPING FIX ---------- */
+let lastName = "";
+let typingTimeout;
+
+function typeText(el, text, speed = 25){
+clearTimeout(typingTimeout);
+el.innerText = "";
+let i = 0;
+
+function type(){
+if(i < text.length){
 el.innerText += text[i++];
-typing=setTimeout(t,40);
+typingTimeout = setTimeout(type, speed);
 }
-})();
+}
+type();
 }
 
-/* VIEWS (GitHub safe) */
+/* ---------- VIEWS ---------- */
 async function updateViews(){
 try{
 const res = await fetch("https://api.counterapi.dev/v1/dre_site/views/up");
@@ -63,7 +67,7 @@ DOM.views.innerText = "1";
 }
 }
 
-/* UI */
+/* ---------- UI UPDATE ---------- */
 function updateUI(d){
 if(!d || !d.discord_user) return;
 const u = d.discord_user;
@@ -76,16 +80,21 @@ DOM.cardAvatar.src = url;
 DOM.favicon.href = url;
 }
 
-/* name */
+/* ✅ NAME (FIXED - NO LOOP TYPING) */
 const name = u.global_name || u.username || "dwep";
-typeText(DOM.name, name);
-typeText(DOM.cardName, name);
+
+if(name !== lastName){
+typeText(DOM.name, name, 25);
+typeText(DOM.cardName, name, 20);
+lastName = name;
+}
+
 DOM.username.innerText = "@"+u.username;
 
 /* status */
 DOM.status.className = "status-dot "+(d.discord_status || "offline");
 
-/* decoration FIX */
+/* decoration */
 if(u.avatar_decoration_data){
 const asset = u.avatar_decoration_data.asset;
 const url1 = `https://cdn.discordapp.com/avatar-decoration-presets/${asset}.png?${Date.now()}`;
@@ -93,22 +102,22 @@ const url2 = `https://cdn.discordapp.com/avatar-decorations/${asset}.png?${Date.
 
 DOM.decoration.onerror = ()=>DOM.decoration.src = url2;
 DOM.decoration.src = url1;
-DOM.decoration.style.display="block";
+DOM.decoration.style.display = "block";
 }else{
-DOM.decoration.style.display="none";
+DOM.decoration.style.display = "none";
 }
 
-/* custom status */
+/* note */
 const custom = d.activities?.find(a=>a.type===4);
 if(custom){
 DOM.note.innerText = custom.state;
-DOM.noteSection.style.display="block";
+DOM.noteSection.style.display = "block";
 }else{
-DOM.noteSection.style.display="none";
+DOM.noteSection.style.display = "none";
 }
 }
 
-/* LANYARD */
+/* ---------- LANYARD ---------- */
 function connectLanyard(){
 const ws = new WebSocket("wss://api.lanyard.rest/socket");
 
@@ -126,6 +135,5 @@ updateUI(msg.d);
 }
 };
 
-ws.onerror = ()=>{};
 ws.onclose = ()=>setTimeout(connectLanyard,5000);
 }
