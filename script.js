@@ -1,84 +1,180 @@
-const DISCORD_ID = "826362723792977950"; 
+const DISCORD_ID = "826362723792977950";
 
-// Safety: Disable Inspect Element keys
-function disableInspect(e) {
-    if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) {
-        return false;
+/* =========================
+   HELPERS
+========================= */
+const $ = (id) => document.getElementById(id);
+
+const DOM = {
+  avatar: $("discord-avatar"),
+  cardAvatar: $("card-avatar"),
+  decoration: $("discord-decoration"),
+  name: $("display-name"),
+  cardName: $("card-name"),
+  username: $("card-username"),
+  status: $("status-dot"),
+  statusText: $("card-status-text"),
+  note: $("discord-note"),
+  noteSection: $("note-section"),
+  views: $("view-count"),
+  music: $("bg-music"),
+  overlay: $("overlay"),
+  favicon: $("dynamic-favicon")
+};
+
+/* =========================
+   CLICK TO ENTER
+========================= */
+DOM.overlay.addEventListener("click", () => {
+  DOM.overlay.style.display = "none";
+
+  DOM.music.volume = 0;
+  DOM.music.play().catch(() => {});
+
+  fadeMusic();
+  connectLanyard();
+  updateViews();
+});
+
+/* =========================
+   MUSIC FADE IN
+========================= */
+function fadeMusic() {
+  let v = 0;
+  const interval = setInterval(() => {
+    v += 0.03;
+    DOM.music.volume = v;
+    if (v >= 0.2) clearInterval(interval);
+  }, 80);
+}
+
+/* =========================
+   VIEWS COUNTER
+========================= */
+async function updateViews() {
+  try {
+    const res = await fetch("https://api.counterapi.dev/v1/dre_site/views/up");
+    const data = await res.json();
+    DOM.views.innerText = data.value.toLocaleString();
+  } catch {
+    DOM.views.innerText = "1";
+  }
+}
+
+/* =========================
+   TYPEWRITER (FIXED LOOP SAFE)
+========================= */
+function typeText(el, text, speed = 30) {
+  if (!el) return;
+
+  let i = 0;
+  el.innerText = "";
+
+  (function type() {
+    if (i < text.length) {
+      el.innerText += text[i++];
+      setTimeout(type, speed);
     }
+  })();
 }
 
-async function updateLanyard() {
+/* =========================
+   STATUS MAPPING
+========================= */
+function getStatus(status) {
+  switch (status) {
+    case "online": return ["Online", "online"];
+    case "idle": return ["Idle", "idle"];
+    case "dnd": return ["Do Not Disturb", "dnd"];
+    default: return ["Offline", "offline"];
+  }
+}
+
+/* =========================
+   MAIN UI UPDATE
+========================= */
+function updateUI(data) {
+  if (!data?.discord_user) return;
+
+  const u = data.discord_user;
+
+  /* ================= AVATAR ================= */
+  if (u.avatar) {
+    const url = `https://cdn.discordapp.com/avatars/${DISCORD_ID}/${u.avatar}.${u.avatar.startsWith("a_") ? "gif" : "png"}`;
+
+    DOM.avatar.src = url;
+    DOM.cardAvatar.src = url;
+    DOM.favicon.href = url;
+  }
+
+  /* ================= NAME ================= */
+  const name = u.global_name || u.username || "dwep";
+
+  typeText(DOM.name, name);
+  typeText(DOM.cardName, name);
+
+  DOM.username.innerText = "@" + u.username;
+
+  /* ================= STATUS ================= */
+  const status = data.discord_status || "offline";
+
+  DOM.status.className = "status-dot " + status;
+
+  const [text, cls] = getStatus(status);
+  DOM.statusText.innerText = text;
+  DOM.statusText.className = "status-text " + cls;
+
+  /* ================= NOTE ================= */
+  const custom = data.activities?.find(a => a.type === 4);
+
+  if (custom?.state) {
+    DOM.note.innerText = custom.state;
+    DOM.noteSection.style.display = "block";
+  } else {
+    DOM.noteSection.style.display = "none";
+  }
+
+  /* ================= DECORATION FIX ================= */
+  if (u.avatar_decoration_data?.asset) {
+    const asset = u.avatar_decoration_data.asset;
+
+    DOM.decoration.src =
+      `https://cdn.discordapp.com/avatar-decoration-presets/${asset}.png`;
+
+    DOM.decoration.style.display = "block";
+  } else {
+    DOM.decoration.style.display = "none";
+  }
+}
+
+/* =========================
+   LANYARD CONNECTION
+========================= */
+function connectLanyard() {
+  const ws = new WebSocket("wss://api.lanyard.rest/socket");
+
+  ws.onopen = () => {
+    ws.send(JSON.stringify({
+      op: 2,
+      d: {
+        subscribe_to_id: DISCORD_ID
+      }
+    }));
+  };
+
+  ws.onmessage = (event) => {
     try {
-        const response = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
-        const { data, success } = await response.json();
+      const msg = JSON.parse(event.data);
 
-        if (success) {
-            const user = data.discord_user;
+      if (msg.t === "INIT_STATE" || msg.t === "PRESENCE_UPDATE") {
+        updateUI(msg.d);
+      }
+    } catch (err) {
+      console.log("Lanyard error:", err);
+    }
+  };
 
-            // 1. Avatar Update
-            const avatarBase = `https://cdn.discordapp.com/avatars/${DISCORD_ID}/${user.avatar}`;
-            const avatarUrl = user.avatar.startsWith("a_") ? `${avatarBase}.gif` : `${avatarBase}.png`;
-            
-            // Apply avatar to main card, hover card, AND DYNAMIC FAVICON
-            document.getElementById('discord-avatar').src = avatarUrl;
-            document.getElementById('card-avatar').src = avatarUrl;
-            document.getElementById('dynamic-favicon').href = avatarUrl; // Sets Tab Icon
-
-            // 2. FIXED: Decoration Logic (forces refresh)
-            const decoEl = document.getElementById('discord-decoration');
-            if (user.avatar_decoration_data) {
-                const asset = user.avatar_decoration_data.asset;
-                // Add ?v= timestamp to prevent browser from caching a broken version
-                decoEl.src = `https://cdn.discordapp.com/avatar-decorations/${asset}.png?v=${Date.now()}`;
-                decoEl.style.display = "block";
-            } else {
-                decoEl.style.display = "none";
-            }
-
-            // 3. Note Section Logic (smoother, only updates if text changed)
-            const customStatus = data.activities.find(a => a.type === 4);
-            const noteSection = document.getElementById('note-section');
-            const noteText = document.getElementById('discord-note');
-
-            if (customStatus && customStatus.state) {
-                if (noteText.innerText !== customStatus.state) {
-                    noteText.innerText = customStatus.state;
-                }
-                noteSection.style.display = "block";
-            } else {
-                noteSection.style.display = "none";
-            }
-
-            // 4. Names & Presence
-            const name = user.global_name || user.username;
-            document.getElementById('display-name').innerText = name;
-            document.getElementById('card-name').innerText = name;
-            document.getElementById('card-username').innerText = `@${user.username}`;
-            document.getElementById('discord-link').href = `https://discord.com/users/${DISCORD_ID}`;
-
-            const status = data.discord_status;
-            document.getElementById('status-dot').className = `status-dot ${status}`;
-            document.getElementById('card-status-dot-small').className = `status-dot-small ${status}`;
-        }
-    } catch (e) { console.error("Lanyard Error:", e); }
-}
-
-async function handleViews() {
-    try {
-        const res = await fetch(`https://api.counterapi.dev/v1/dre_bio_final_${DISCORD_ID}/update/visits`);
-        const data = await res.json();
-        document.getElementById('view-count').innerText = data.value.toLocaleString();
-    } catch (e) { console.log("Counter offline"); }
-}
-
-function enterSite() {
-    document.getElementById('overlay').classList.add('hidden');
-    document.querySelector('.background-container').style.transform = "scale(1.1)";
-    const music = document.getElementById('bg-music');
-    music.volume = 0.2;
-    music.play();
-    
-    updateLanyard();
-    handleViews();
-    setInterval(updateLanyard, 10000); // Check every 10 seconds
+  ws.onclose = () => {
+    setTimeout(connectLanyard, 3000);
+  };
 }
