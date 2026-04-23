@@ -6,21 +6,26 @@
 
 <title>/Dre</title>
 
+<!-- favicon -->
 <link rel="icon" id="dynamic-favicon" href="">
+
+<!-- styles -->
 <link rel="stylesheet" href="style.css">
+
+<!-- icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
 
-<!-- CLICK TO ENTER -->
+<!-- CLICK TO ENTER OVERLAY -->
 <div id="overlay">
   <div class="click-text">c l i c k</div>
 </div>
 
 <!-- BACKGROUND -->
 <div class="background-container">
-  <img src="https://media.giphy.com/media/k18AJ9319EKBD2o6gx/giphy.gif">
+  <img src="https://media.giphy.com/media/k18AJ9319EKBD2o6gx/giphy.gif" alt="bg">
 </div>
 
 <!-- MUSIC -->
@@ -28,53 +33,63 @@
   <source src="Gat Putch - Halik Sobrang Diin PT.2 (feat. Louie Grammz & Mi'Kel).mp3" type="audio/mpeg">
 </audio>
 
-<!-- MAIN -->
+<!-- MAIN CONTENT -->
 <div class="main-content">
-<div class="profile-card">
+  <div class="profile-card">
 
-  <!-- AVATAR -->
-  <div class="avatar-container">
+    <!-- AVATAR SECTION -->
+    <div class="avatar-container">
 
-    <!-- DISCORD CARD -->
-    <div class="discord-card">
-      <img id="card-avatar" src="">
-      <h2 id="card-name">dwep</h2>
-      <p id="card-username">@dwep</p>
-      <p id="card-status-text" class="status-text">Offline</p>
+      <!-- DISCORD HOVER CARD -->
+      <div class="discord-card">
+        <img id="card-avatar" src="" alt="avatar">
+
+        <h2 id="card-name">dwep</h2>
+        <p id="card-username">@dwep</p>
+
+        <p id="card-status-text" class="status-text">Offline</p>
+      </div>
+
+      <!-- DECORATION -->
+      <img id="discord-decoration" class="avatar-decoration" style="display:none;" alt="decoration">
+
+      <!-- MAIN AVATAR -->
+      <img id="discord-avatar" class="avatar" src="https://via.placeholder.com/150" alt="avatar">
+
+      <!-- STATUS DOT -->
+      <div id="status-dot" class="status-dot offline"></div>
+
     </div>
 
-    <img id="discord-decoration" class="avatar-decoration" style="display:none;">
-    <img id="discord-avatar" class="avatar" src="https://via.placeholder.com/150">
+    <!-- NAME -->
+    <h1 id="display-name">dwep</h1>
 
-    <div id="status-dot" class="status-dot offline"></div>
+    <!-- NOTE (UNDER NAME) -->
+    <div id="note-section" style="display:none;">
+      <p id="discord-note"></p>
+    </div>
+
+    <!-- SOCIALS -->
+    <div class="socials">
+      <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
+      <a href="https://spotify.com" target="_blank"><i class="fab fa-spotify"></i></a>
+      <a href="https://discord.com" target="_blank"><i class="fab fa-discord"></i></a>
+    </div>
+
+    <!-- VIEWS -->
+    <div class="view-pill">
+      Views: <span id="view-count">0</span>
+    </div>
+
   </div>
-
-  <!-- NAME -->
-  <h1 id="display-name">dwep</h1>
-
-  <!-- NOTE (UNDER NAME) -->
-  <div id="note-section" style="display:none;">
-    <p id="discord-note"></p>
-  </div>
-
-  <!-- SOCIALS -->
-  <div class="socials">
-    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-    <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
-    <a href="https://spotify.com" target="_blank"><i class="fab fa-spotify"></i></a>
-    <a href="https://discord.com" target="_blank"><i class="fab fa-discord"></i></a>
-  </div>
-
-  <!-- VIEWS -->
-  <div class="view-pill">
-    Views: <span id="view-count">0</span>
-  </div>
-
-</div>
 </div>
 
+<!-- FOOTER -->
 <div class="made-by">Made By: Dre</div>
 
+<!-- SCRIPT -->
 <script src="script.js"></script>
+
 </body>
 </html>
