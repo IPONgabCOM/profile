@@ -3,52 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>/Dre</title>
 
-<link rel="icon" id="dynamic-favicon">
+<!-- favicon -->
+<link rel="icon" id="dynamic-favicon" href="">
+
+<!-- styles -->
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 </head>
 
 <body>
 
+<!-- CLICK OVERLAY -->
 <div id="overlay">
     <div class="click-text">c l i c k</div>
 </div>
 
+<!-- BACKGROUND -->
 <div class="background-container">
-    <img src="https://media.giphy.com/media/k18AJ9319EKBD2o6gx/giphy.gif">
+    <img src="https://media.giphy.com/media/k18AJ9319EKBD2o6gx/giphy.gif" id="bg-img">
 </div>
 
-<audio id="bg-music" loop>
+<!-- MUSIC -->
+<audio id="bg-music" loop preload="auto">
     <source src="Gat Putch - Halik Sobrang Diin PT.2 (feat. Louie Grammz & Mi'Kel).mp3" type="audio/mpeg">
 </audio>
 
+<!-- MAIN -->
 <div class="main-content">
 <div class="profile-card">
 
+    <!-- AVATAR -->
     <div class="avatar-container">
 
-        <!-- TOPBAR -->
+        <!-- 🔥 DISCORD TOPBAR -->
         <div class="discord-card">
-            <img id="card-avatar">
+
+            <img id="card-avatar" src="">
+
             <h2 id="card-name">dwep</h2>
             <p id="card-username">@dwep</p>
+
+            <!-- STATUS TEXT -->
             <p id="card-status-text" class="status-text">Offline</p>
 
+            <!-- NOTE -->
             <div id="note-section" style="display:none;">
                 <p id="discord-note"></p>
             </div>
+
         </div>
 
-        <img id="discord-decoration" class="avatar-decoration">
-        <img id="discord-avatar" class="avatar">
+        <!-- DECORATION -->
+        <img id="discord-decoration" class="avatar-decoration" style="display:none;">
+
+        <!-- MAIN AVATAR -->
+        <img id="discord-avatar" class="avatar" src="https://via.placeholder.com/150">
+
+        <!-- STATUS DOT -->
         <div id="status-dot" class="status-dot offline"></div>
 
     </div>
 
+    <!-- NAME -->
     <h1 id="display-name">dwep</h1>
 
+    <!-- SOCIALS -->
     <div class="socials">
         <a href="https://www.instagram.com/d739140803/" target="_blank"><i class="fab fa-instagram"></i></a>
         <a href="https://www.tiktok.com/@d739140803" target="_blank"><i class="fab fa-tiktok"></i></a>
@@ -56,6 +79,7 @@
         <a href="https://discord.com/users/826362723792977950" target="_blank"><i class="fab fa-discord"></i></a>
     </div>
 
+    <!-- VIEWS -->
     <div class="view-pill">
         Views: <span id="view-count">Loading...</span>
     </div>
@@ -63,8 +87,11 @@
 </div>
 </div>
 
+<!-- FOOTER -->
 <div class="made-by">Made By: Dre</div>
 
+<!-- SCRIPT -->
 <script src="script.js"></script>
+
 </body>
 </html>
