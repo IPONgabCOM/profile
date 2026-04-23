@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dre</title>
+
+<link rel="icon" id="dynamic-favicon">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+<div id="overlay" onclick="enterSite()">
+    <div class="click-text">click</div>
+</div>
+
+<div class="background-container">
+    <img src="https://media.giphy.com/media/k18AJ9319EKBD2o6gx/giphy.gif">
+</div>
+
+<canvas id="particles"></canvas>
+
+<audio id="bg-music" loop>
+    <source src="yourmusic.mp3" type="audio/mpeg">
+</audio>
+
+<div class="main-content">
+<div class="profile-card">
+
+    <div class="avatar-container">
+
+        <div class="discord-card">
+            <img id="card-avatar">
+            <h2 id="card-name">dwep</h2>
+            <p id="card-username">@dwep</p>
+            <div id="note-section" style="display:none;">
+                <p id="discord-note"></p>
+            </div>
+        </div>
+
+        <img id="discord-decoration" class="avatar-decoration">
+        <img id="discord-avatar" class="avatar">
+        <div id="status-dot" class="status-dot offline"></div>
+
+    </div>
+
+    <h1 id="display-name">dwep</h1>
+
+    <!-- SPOTIFY -->
+    <div class="spotify-bar" id="spotify-bar" style="display:none;">
+        <img id="spotify-cover">
+        <div class="spotify-info">
+            <div id="spotify-song"></div>
+            <div id="spotify-artist"></div>
+            <div class="progress">
+                <div id="spotify-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="socials">
+        <a href="#"><i class="fab fa-discord"></i></a>
+    </div>
+
+    <div class="view-pill">Views: <span id="view-count">0</span></div>
+
+</div>
+</div>
+
+<div class="made-by">Made By: Dre</div>
+
+<script src="script.js"></script>
+</body>
+</html>
