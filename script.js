@@ -31,30 +31,31 @@ DOM.overlay.addEventListener("click", () => {
 function startMusic() {
   DOM.music.volume = 0;
   DOM.music.play().catch(()=>{});
+
   let v = 0;
-  let fade = setInterval(() => {
+  const fade = setInterval(() => {
     v += 0.03;
     DOM.music.volume = v;
     if (v >= 0.2) clearInterval(fade);
   }, 80);
 }
 
-/* 🔥 LOOP TYPE (EVERY 5 SEC) */
+/* TYPE LOOP */
 function typeLoop(el, text, speed = 30, delay = 5000) {
   function run() {
     el.innerText = "";
     let i = 0;
 
-    function typing() {
+    function type() {
       if (i < text.length) {
         el.innerText += text[i++];
-        setTimeout(typing, speed);
+        setTimeout(type, speed);
       } else {
         setTimeout(run, delay);
       }
     }
 
-    typing();
+    type();
   }
 
   run();
@@ -84,6 +85,7 @@ function getStatus(s) {
 /* UI */
 function updateUI(d) {
   if (!d?.discord_user) return;
+
   const u = d.discord_user;
 
   if (u.avatar) {
@@ -97,8 +99,6 @@ function updateUI(d) {
 
   typeLoop(DOM.name, name);
   typeLoop(DOM.cardName, name);
-
-  DOM.username.innerText = "@" + u.username;
 
   const status = d.discord_status || "offline";
   DOM.status.className = "status-dot " + status;
