@@ -1,7 +1,7 @@
 const DISCORD_ID = "826362723792977950";
 
 /* =========================
-   HELPERS
+   DOM SHORTCUT
 ========================= */
 const $ = (id) => document.getElementById(id);
 
@@ -41,10 +41,10 @@ DOM.overlay.addEventListener("click", () => {
 ========================= */
 function fadeMusic() {
   let v = 0;
-  const interval = setInterval(() => {
+  const fade = setInterval(() => {
     v += 0.03;
     DOM.music.volume = v;
-    if (v >= 0.2) clearInterval(interval);
+    if (v >= 0.2) clearInterval(fade);
   }, 80);
 }
 
@@ -62,24 +62,22 @@ async function updateViews() {
 }
 
 /* =========================
-   TYPEWRITER (FIXED LOOP SAFE)
+   TYPEWRITER (FIXED NO BUGS)
 ========================= */
 function typeText(el, text, speed = 30) {
   if (!el) return;
 
-  let i = 0;
   el.innerText = "";
+  let i = 0;
 
-  (function type() {
-    if (i < text.length) {
-      el.innerText += text[i++];
-      setTimeout(type, speed);
-    }
-  })();
+  const interval = setInterval(() => {
+    el.innerText += text[i++];
+    if (i >= text.length) clearInterval(interval);
+  }, speed);
 }
 
 /* =========================
-   STATUS MAPPING
+   STATUS SYSTEM
 ========================= */
 function getStatus(status) {
   switch (status) {
@@ -91,7 +89,7 @@ function getStatus(status) {
 }
 
 /* =========================
-   MAIN UI UPDATE
+   UPDATE UI FROM LANYARD
 ========================= */
 function updateUI(data) {
   if (!data?.discord_user) return;
