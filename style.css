@@ -12,7 +12,9 @@ body {
   overflow: hidden;
 }
 
-/* background */
+/* =========================
+   BACKGROUND
+========================= */
 .background-container {
   position: fixed;
   inset: 0;
@@ -26,7 +28,9 @@ body {
   filter: brightness(35%) grayscale(100%);
 }
 
-/* overlay */
+/* =========================
+   CLICK OVERLAY
+========================= */
 #overlay {
   position: fixed;
   inset: 0;
@@ -40,10 +44,14 @@ body {
 
 .click-text {
   letter-spacing: 10px;
+  font-size: 14px;
+  opacity: 0.7;
   animation: breathe 2s infinite;
 }
 
-/* layout */
+/* =========================
+   MAIN LAYOUT
+========================= */
 .main-content {
   height: 100vh;
   display: flex;
@@ -52,14 +60,17 @@ body {
 }
 
 .profile-card {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
   padding: 45px;
   border-radius: 20px;
   text-align: center;
+  min-width: 320px;
 }
 
-/* avatar */
+/* =========================
+   AVATAR SECTION
+========================= */
 .avatar-container {
   position: relative;
   width: 130px;
@@ -67,12 +78,17 @@ body {
   margin: 0 auto 20px;
 }
 
+/* main avatar */
 .avatar {
   width: 95px;
   height: 95px;
   border-radius: 50%;
+  object-fit: cover;
+  position: relative;
+  z-index: 2;
 }
 
+/* decoration ring */
 .avatar-decoration {
   position: absolute;
   width: 140px;
@@ -80,9 +96,12 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 1;
 }
 
-/* status */
+/* =========================
+   STATUS DOT
+========================= */
 .status-dot {
   width: 18px;
   height: 18px;
@@ -91,6 +110,7 @@ body {
   bottom: 18px;
   right: 18px;
   border: 3px solid #000;
+  z-index: 3;
 }
 
 .online { background: #43b581; }
@@ -98,49 +118,75 @@ body {
 .dnd { background: #f04747; }
 .offline { background: #747f8d; }
 
-/* discord hover */
+/* =========================
+   DISCORD HOVER CARD
+========================= */
 .discord-card {
   position: absolute;
   bottom: 110%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(10px);
   background: #111;
   padding: 12px;
   border-radius: 10px;
   width: 220px;
   opacity: 0;
-  transition: 0.3s;
+  transition: 0.3s ease;
+  text-align: left;
+  z-index: 20;
 }
 
 .avatar-container:hover .discord-card {
   opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
-/* name */
+/* hover avatar inside card */
+#card-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-bottom: 8px;
+}
+
+/* =========================
+   NAME
+========================= */
 #display-name {
   font-size: 22px;
   margin-top: 10px;
+  position: relative;
 }
 
+/* typing cursor */
 #display-name::after {
   content: "|";
   animation: blink 1s infinite;
 }
 
-/* note */
+/* =========================
+   NOTE UNDER NAME
+========================= */
 #note-section {
   margin-top: 8px;
   font-size: 13px;
   opacity: 0.8;
 }
 
-/* socials */
+/* =========================
+   SOCIALS
+========================= */
+.socials {
+  margin-top: 12px;
+}
+
 .socials a {
   color: #fff;
   margin: 10px;
   font-size: 20px;
   opacity: 0.5;
   transition: 0.3s;
+  display: inline-block;
 }
 
 .socials a:hover {
@@ -148,29 +194,35 @@ body {
   transform: translateY(-3px);
 }
 
-/* views */
+/* =========================
+   VIEWS
+========================= */
 .view-pill {
-  margin-top: 10px;
+  margin-top: 12px;
   font-size: 12px;
   opacity: 0.6;
 }
 
-/* footer */
+/* =========================
+   FOOTER
+========================= */
 .made-by {
   position: fixed;
   bottom: 10px;
   right: 15px;
   font-size: 10px;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255, 255, 255, 0.4);
 }
 
-/* animations */
+/* =========================
+   ANIMATIONS
+========================= */
 @keyframes blink {
-  0%,100%{opacity:1}
-  50%{opacity:0}
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 @keyframes breathe {
-  0%,100%{opacity:1}
-  50%{opacity:0.3}
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
 }
